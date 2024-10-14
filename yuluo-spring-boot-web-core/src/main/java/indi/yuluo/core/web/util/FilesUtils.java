@@ -1,4 +1,4 @@
-package indi.yuluo.web.util;
+package indi.yuluo.core.web.util;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.util.StringUtils;

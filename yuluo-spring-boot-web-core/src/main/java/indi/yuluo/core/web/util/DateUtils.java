@@ -1,4 +1,4 @@
-package indi.yuluo.web.util;
+package indi.yuluo.core.web.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
