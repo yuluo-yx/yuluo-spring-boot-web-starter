@@ -1,4 +1,4 @@
-package indi.yuluo.web.annotation;
+package indi.yuluo.core.web.annotation;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
