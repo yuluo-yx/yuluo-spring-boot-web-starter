@@ -8,5 +8,4 @@ spring:
 # 模拟数据库中的用户信息配置
 user:
   id: 3443323453454
-  name: yuluo
-  email: yuluo@test.com
+  name: Administrator
