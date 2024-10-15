@@ -1,4 +1,4 @@
-package indi.yuluo.web.annotation;
+package indi.yuluo.core.web.annotation;
 
 public @interface RequestMethodApi {
 }

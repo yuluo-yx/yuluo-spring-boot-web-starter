@@ -1,4 +1,4 @@
-package indi.yuluo.web.util;
+package indi.yuluo.core.web.util;
 
 public class SnowFlakeIdGenerator {
 

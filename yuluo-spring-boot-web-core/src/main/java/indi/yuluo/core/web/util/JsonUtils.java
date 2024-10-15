@@ -1,4 +1,4 @@
-package indi.yuluo.web.util;
+package indi.yuluo.core.web.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

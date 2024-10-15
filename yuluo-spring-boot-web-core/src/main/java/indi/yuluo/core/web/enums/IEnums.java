@@ -1,4 +1,4 @@
-package indi.yuluo.web.enums;
+package indi.yuluo.core.web.enums;
 
 public interface IEnums {
 

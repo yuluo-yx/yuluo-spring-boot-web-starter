@@ -1,6 +1,5 @@
-package indi.yuluo.web.util;
+package indi.yuluo.core.web.util;
 
-import org.apache.http.conn.util.InetAddressUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -18,7 +17,14 @@ public final class IpDomainUtil {
 
     private static final Pattern DOMAIN_PATTERN =
             Pattern.compile("^[-\\w]+(\\.[-\\w]+)*$");
-
+    private static final Pattern IPV4_PATTERN =
+            Pattern.compile("^(([1-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){1}(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$");
+    private static final Pattern IPV4_MAPPED_IPV6_PATTERN =
+            Pattern.compile("^::[fF]{4}:(([1-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){1}(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$");
+    private static final Pattern IPV6_STD_PATTERN =
+            Pattern.compile("^[0-9a-fA-F]{1,4}(:[0-9a-fA-F]{1,4}){7}$");
+    private static final Pattern IPV6_HEX_COMPRESSED_PATTERN =
+            Pattern.compile("^(([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,5})?)::(([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,5})?)$");
     private static final String LOCALHOST = "localhost";
 
     /**
@@ -35,17 +41,17 @@ public final class IpDomainUtil {
      * @return true-yes false-no
      */
     public static boolean validateIpDomain(String ipDomain) {
-        if (ipDomain == null || !StringUtils.hasText(ipDomain)) {
+        if (!StringUtils.hasText(ipDomain)) {
             return false;
         }
         ipDomain = ipDomain.trim();
         if (LOCALHOST.equalsIgnoreCase(ipDomain)) {
             return true;
         }
-        if (InetAddressUtils.isIPv4Address(ipDomain)) {
+        if (isIPv4Address(ipDomain)) {
             return true;
         }
-        if (InetAddressUtils.isIPv6Address(ipDomain)) {
+        if (isIPv6Address(ipDomain)) {
             return true;
         }
         return DOMAIN_PATTERN.matcher(ipDomain).matches();
@@ -57,7 +63,7 @@ public final class IpDomainUtil {
      * @return true or false
      */
     public static boolean isHasSchema(String domainIp) {
-        if (domainIp == null || !StringUtils.hasText(domainIp)) {
+        if (!StringUtils.hasText(domainIp)) {
             return false;
         }
         return DOMAIN_SCHEMA.matcher(domainIp).matches();
@@ -95,7 +101,7 @@ public final class IpDomainUtil {
      * @return IP address type
      */
     public static String checkIpAddressType(String ipDomain){
-        if (StringUtils.hasText(ipDomain) && InetAddressUtils.isIPv6Address(ipDomain)) {
+        if (StringUtils.hasText(ipDomain) && isIPv6Address(ipDomain)) {
             return "ipv6";
         }
         return "ipv4";
@@ -112,6 +118,30 @@ public final class IpDomainUtil {
         } catch (UnknownHostException e) {
             return null;
         }
+    }
+
+    public static boolean isIPv4Address(String input) {
+        return IPV4_PATTERN.matcher(input).matches();
+    }
+
+    public static boolean isIPv6Address(String input) {
+        return isIPv6StdAddress(input) || isIPv6HexCompressedAddress(input);
+    }
+
+    public static boolean isIPv6StdAddress(String input) {
+        return IPV6_STD_PATTERN.matcher(input).matches();
+    }
+
+    public static boolean isIPv6HexCompressedAddress(String input) {
+        int colonCount = 0;
+
+        for (int i = 0; i < input.length(); ++i) {
+            if (input.charAt(i) == ':') {
+                ++colonCount;
+            }
+        }
+
+        return colonCount <= 7 && IPV6_HEX_COMPRESSED_PATTERN.matcher(input).matches();
     }
 
 }

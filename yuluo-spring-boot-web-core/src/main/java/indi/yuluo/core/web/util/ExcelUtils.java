@@ -1,7 +1,6 @@
-package indi.yuluo.web.util;
+package indi.yuluo.core.web.util;
 
-
-import com.yyby.exception.ServiceException;
+import indi.yuluo.core.web.exception.WebServiceException;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFDrawing;
@@ -63,7 +62,7 @@ public final class ExcelUtils {
             fileOut = new FileOutputStream(excelPath);
             wb.write(fileOut);
         } catch (Exception e) {
-            throw new ServiceException("add signature images failed. err: " + e.getMessage());
+            throw new WebServiceException("add signature images failed. err: " + e.getMessage());
         } finally {
             IOUtils.closeQuietly(fileOut);
             IOUtils.closeQuietly(byteArrayOut);
@@ -82,7 +81,7 @@ public final class ExcelUtils {
         // 创建 Excel 文件对象
         File excelFile = new File(excelPath);
         if (!excelFile.exists()) {
-            throw new ServiceException("Excel file does not exist: " + excelPath);
+            throw new WebServiceException("Excel file does not exist: " + excelPath);
         }
 
         // 设置请求头
@@ -108,13 +107,13 @@ public final class ExcelUtils {
                 try (FileOutputStream fos = new FileOutputStream(pdfPath)) {
                     fos.write(pdfBytes);
                 } catch (IOException e) {
-                    throw new ServiceException("save pdf file failed!, e: " + e.getMessage());
+                    throw new WebServiceException("save pdf file failed!, e: " + e.getMessage());
                 }
             } else {
-               throw new ServiceException("No content received in response.");
+               throw new WebServiceException("No content received in response.");
             }
         } else {
-            throw new ServiceException("Conversion failed: " + response.getStatusCode());
+            throw new WebServiceException("Conversion failed: " + response.getStatusCode());
         }
     }
 

@@ -6,7 +6,7 @@
 
     <groupId>indi.yuluo</groupId>
     <artifactId>yuluo-spring-boot-web</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -24,11 +24,7 @@
         <revision>2024.10.14</revision>
 
         <spring-boot.version>3.3.4</spring-boot.version>
-        <sa-token.version>1.39.0</sa-token.version>
-        <knife4j.version>4.4.0</knife4j.version>
 
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -40,19 +36,6 @@
             <version>${spring-boot.version}</version>
             <type>pom</type>
             <scope>import</scope>
-        </dependency>
-
-        <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
-        <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>${sa-token.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
         </dependency>
 
     </dependencies>
